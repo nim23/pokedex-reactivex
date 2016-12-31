@@ -9,11 +9,14 @@
 import UIKit
 import RxAlamofire
 import RxSwift
+import RxCocoa
 import SwiftyJSON
 
 class PokemonDetailVC: UIViewController {
 
     var pokemon: Pokemon!
+    
+    private var pokeDetailViewModel: PokeDetailViewModel!
     
     let disposeBag = DisposeBag()
     
@@ -36,17 +39,41 @@ class PokemonDetailVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        pokeNameLbl.text = pokemon.name.capitalized
-        let img = UIImage(named: "\(pokemon.pokedexId)")
-        mainImg.image = img
-        currentEvoImg.image = img
-        pokedexLbl.text = "\(pokemon.pokedexId)"
+        
+        pokeDetailViewModel = PokeDetailViewModel(pokemon)
+        addBindsToViewModel(viewModel: pokeDetailViewModel)
+        
         heightLbl.text = ""
         weightLbl.text = ""
         typeLbl.text = ""
         descriptionLbl.text = ""
         defenseLbl.text = ""
+        attackLbl.text = ""
         downloadPokemonDetails()
+    }
+    
+    private func addBindsToViewModel(viewModel: PokeDetailViewModel) {
+        viewModel.pokemonName
+            .asDriver(onErrorJustReturn: "")
+            .drive(pokeNameLbl.rx.text)
+            .addDisposableTo(disposeBag)
+        
+        viewModel.pokemonImage
+            .asDriver(onErrorJustReturn: UIImage(named: "1")!)
+            .drive(mainImg.rx.image)
+            .addDisposableTo(disposeBag)
+        
+        viewModel.pokemonImage
+            .asDriver(onErrorJustReturn: UIImage(named: "1")!)
+            .drive(currentEvoImg.rx.image)
+            .addDisposableTo(disposeBag)
+        
+        viewModel.pokedexId
+            .map { "\($0)" }
+            .asDriver(onErrorJustReturn: "")
+            .drive(pokedexLbl.rx.text)
+            .addDisposableTo(disposeBag)
+        
     }
     
     func downloadPokemonDetails() {
@@ -64,9 +91,6 @@ class PokemonDetailVC: UIViewController {
     }
     
     func updatePokemonModel(responseJSON: JSON) {
-        
-        print(responseJSON)
-        
         
         if let weight = responseJSON["weight"].string {
             pokemon.weight = weight
