@@ -15,10 +15,9 @@ import SwiftyJSON
 class PokemonDetailVC: UIViewController {
 
     var pokemon: Pokemon!
-    
     private var pokeDetailViewModel: PokeDetailViewModel!
     
-    let disposeBag = DisposeBag()
+    private let disposeBag = DisposeBag()
     
     @IBOutlet weak var mainImg: UIImageView!
     @IBOutlet weak var pokeNameLbl: UILabel!
@@ -40,16 +39,8 @@ class PokemonDetailVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        pokeDetailViewModel = PokeDetailViewModel(pokemon)
+        pokeDetailViewModel = PokeDetailViewModel(pokemon: pokemon, pokeApiService: PokeApiService())
         addBindsToViewModel(viewModel: pokeDetailViewModel)
-        
-        heightLbl.text = ""
-        weightLbl.text = ""
-        typeLbl.text = ""
-        descriptionLbl.text = ""
-        defenseLbl.text = ""
-        attackLbl.text = ""
-        downloadPokemonDetails()
     }
     
     private func addBindsToViewModel(viewModel: PokeDetailViewModel) {
@@ -74,92 +65,55 @@ class PokemonDetailVC: UIViewController {
             .drive(pokedexLbl.rx.text)
             .addDisposableTo(disposeBag)
         
-    }
-    
-    func downloadPokemonDetails() {
-        RxAlamofire.requestJSON(.get, URL(string: pokemon.pokemonUrl)!)
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] (r, pokeJSON) in
-                self?.updatePokemonModel(responseJSON: JSON(pokeJSON))
-            },
-            onError: { error in
-                let e = error as NSError
-                print(e.debugDescription)
-            })
+        viewModel.attack
+            .asDriver(onErrorJustReturn: "")
+            .drive(attackLbl.rx.text)
             .addDisposableTo(disposeBag)
-
-    }
-    
-    func updatePokemonModel(responseJSON: JSON) {
         
-        if let weight = responseJSON["weight"].string {
-            pokemon.weight = weight
-        }
+        viewModel.weight
+            .asDriver(onErrorJustReturn: "")
+            .drive(weightLbl.rx.text)
+            .addDisposableTo(disposeBag)
         
-        if let attack = responseJSON["attack"].int {
-            pokemon.attack = "\(attack)"
-        }
+        viewModel.defense
+            .asDriver(onErrorJustReturn: "")
+            .drive(defenseLbl.rx.text)
+            .addDisposableTo(disposeBag)
         
-        if let height = responseJSON["height"].string {
-            pokemon.height = height
-        }
+        viewModel.height
+            .asDriver(onErrorJustReturn: "")
+            .drive(heightLbl.rx.text)
+            .addDisposableTo(disposeBag)
         
-        if let defense = responseJSON["defense"].int {
-            pokemon.defense = "\(defense)"
-        }
+        viewModel.types
+            .asDriver(onErrorJustReturn: "")
+            .drive(typeLbl.rx.text)
+            .addDisposableTo(disposeBag)
         
-        if let types = responseJSON["types"].array , types.count > 0 {
-            pokemon.type = types.map {
-                $0["name"].string?.capitalized ?? ""
-            }.joined(separator: "/")
-        }
+        viewModel.nextEvolutionText
+            .asDriver(onErrorJustReturn: "")
+            .drive(evoLbl.rx.text)
+            .addDisposableTo(disposeBag)
         
-        if let descriptionUrl = responseJSON["descriptions"].array?[0]["resource_uri"].string {
-            json(.get, URL(string: URL_BASE + descriptionUrl)!)
-                .observeOn(MainScheduler.instance)
-                .map { JSON($0) }
-                .subscribe{ [weak self] in
-                    if let description = $0.element?["description"].string {
-                        self?.pokemon.description = description
-                        self?.descriptionLbl.text = self?.pokemon.description
-                    }
-                }.addDisposableTo(disposeBag)
-        }
-        
-        if let evolutions = responseJSON["evolutions"].array, evolutions.count > 0, evolutions[0]["to"].string?.range(of: "mega") == nil {
-            let nextEvo = evolutions[0]["to"].string!
-            self.pokemon.nextEvolutionName = nextEvo
-            
-            if let uri = evolutions[0]["resource_uri"].string {
-                let newStr = uri.replacingOccurrences(of: "/api/v1/pokemon", with: "")
-                let nextEvoId = newStr.replacingOccurrences(of: "/", with: "")
-                self.pokemon.nextEvolutionId = nextEvoId
+        viewModel.nextEvolutionId
+            .asDriver(onErrorJustReturn: "")
+            .map {
+                $0 == "" ? true : false
             }
-            
-            if let level = evolutions[0]["level"].int {
-                self.pokemon.nextEvoltionLevel = "\(level)"
-            }
-        }
-
-        updateUI()
-    }
-    
-    func updateUI() {
-        attackLbl.text = pokemon.attack
-        heightLbl.text = pokemon.height
-        defenseLbl.text = pokemon.defense
-        weightLbl.text = pokemon.weight
-        typeLbl.text = pokemon.type
+            .drive(nextEvoImg.rx.isHidden)
+            .addDisposableTo(disposeBag)
         
-        if (pokemon.nextEvolutionId == "") {
-            evoLbl.text = "No Evolutions"
-            nextEvoImg.isHidden = true
-        } else {
-            nextEvoImg.isHidden = false
-            nextEvoImg.image = UIImage(named: pokemon.nextEvolutionId)
-            let nextEvolutionLevelTxt = pokemon.nextEvoltionLevel != "" ? " - LVL \(pokemon.nextEvoltionLevel)" : ""
-            let str = "Next Evolution: \(pokemon.nextEvolutionName + nextEvolutionLevelTxt)"
-            evoLbl.text = str
-        }
+        viewModel.nextEvolutionId
+            .map {
+                UIImage(named: $0) ?? nil
+            }
+            .asDriver(onErrorJustReturn: nil)
+            .drive(nextEvoImg.rx.image)
+            .addDisposableTo(disposeBag)
+        
+        viewModel.description
+            .asDriver(onErrorJustReturn: "")
+            .drive(descriptionLbl.rx.text)
+            .addDisposableTo(disposeBag)
     }
 }
