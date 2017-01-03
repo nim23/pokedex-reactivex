@@ -17,8 +17,6 @@ class MainViewController: UIViewController, UICollectionViewDelegateFlowLayout {
     @IBOutlet weak var searchBar: UISearchBar!
     let disposeBag = DisposeBag()
     
-    var pokemons = [Pokemon]()
-    var filteredPokemons = [Pokemon]()
     var musicPlayer: AVAudioPlayer!
     var viewModel: PokemonViewModel!
 

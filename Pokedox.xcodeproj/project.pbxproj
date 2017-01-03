@@ -20,7 +20,6 @@
 		949FCEB71E117E9E00EFD0E6 /* csv.swift in Sources */ = {isa = PBXBuildFile; fileRef = 949FCEB61E117E9E00EFD0E6 /* csv.swift */; };
 		949FCEB91E1182F300EFD0E6 /* pokemon.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 949FCEB81E1182F300EFD0E6 /* pokemon.ttf */; };
 		949FCEBE1E11848400EFD0E6 /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 949FCEBD1E11848400EFD0E6 /* music.mp3 */; };
-		94D06D191E152D3300A8AAAE /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94D06D181E152D3300A8AAAE /* Constants.swift */; };
 		94E795EE1E17BB5F0080F675 /* PokeDetailViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E795ED1E17BB5F0080F675 /* PokeDetailViewModel.swift */; };
 		94E795F11E17CB9D0080F675 /* PokemonApiService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94E795F01E17CB9D0080F675 /* PokemonApiService.swift */; };
 		DCBF91ED2657A8D72BC8A338 /* Pods_Pokedox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 881060536EC9C0436E621742 /* Pods_Pokedox.framework */; };
@@ -43,7 +42,6 @@
 		949FCEB61E117E9E00EFD0E6 /* csv.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = csv.swift; sourceTree = "<group>"; };
 		949FCEB81E1182F300EFD0E6 /* pokemon.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = pokemon.ttf; sourceTree = "<group>"; };
 		949FCEBD1E11848400EFD0E6 /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
-		94D06D181E152D3300A8AAAE /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		94E795ED1E17BB5F0080F675 /* PokeDetailViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokeDetailViewModel.swift; sourceTree = "<group>"; };
 		94E795F01E17CB9D0080F675 /* PokemonApiService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PokemonApiService.swift; sourceTree = "<group>"; };
 		AF17F46950FE83D35BE08A7B /* Pods-Pokedox.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Pokedox.release.xcconfig"; path = "Pods/Target Support Files/Pods-Pokedox/Pods-Pokedox.release.xcconfig"; sourceTree = "<group>"; };
@@ -147,7 +145,6 @@
 			isa = PBXGroup;
 			children = (
 				949FCEB61E117E9E00EFD0E6 /* csv.swift */,
-				94D06D181E152D3300A8AAAE /* Constants.swift */,
 			);
 			name = Util;
 			sourceTree = "<group>";
@@ -309,7 +306,6 @@
 				949FCE9D1E116F3100EFD0E6 /* AppDelegate.swift in Sources */,
 				941616021E128A4000C6DD4E /* PokemonDetailVC.swift in Sources */,
 				949FCEB51E11793200EFD0E6 /* PokeCell.swift in Sources */,
-				94D06D191E152D3300A8AAAE /* Constants.swift in Sources */,
 				946C234D1E1BA09F0066C367 /* PokemonViewModel.swift in Sources */,
 				949FCEB21E11742200EFD0E6 /* Pokemon.swift in Sources */,
 				94E795EE1E17BB5F0080F675 /* PokeDetailViewModel.swift in Sources */,

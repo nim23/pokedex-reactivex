@@ -12,9 +12,8 @@ import RxAlamofire
 import SwiftyJSON
 
 class PokeApiService {
-    private let URL_BASE = "http://pokeapi.co"
-    private let PATH_POKEMON = "/api/v1/pokemon/"
-    
+    static let URL_BASE:String = "http://pokeapi.co"
+    static let PATH_POKEMON = "/api/v1/pokemon/"
     
     func getPokemonDetails(_ pokemonURL: String) -> Observable<JSON> {
         return json(.get, URL(string: pokemonURL)!)
@@ -22,7 +21,7 @@ class PokeApiService {
     }
     
     func getPokemonDescription(_ descriptionURL: String) -> Observable<String> {
-        return json(.get, URL(string: URL_BASE + descriptionURL)!)
+        return json(.get, URL(string: PokeApiService.URL_BASE + descriptionURL)!)
             .map {
                 guard let dict = $0 as? [String: Any],
                     let description = dict["description"] as? String  else { return "" }

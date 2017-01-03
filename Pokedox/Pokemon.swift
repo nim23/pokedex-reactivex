@@ -140,7 +140,7 @@ class Pokemon {
     init(name: String, pokedexId: Int) {
         self._name = name
         self._pokedexId = pokedexId
-        self._pokemonURL = "\(URL_BASE)\(URL_POKEMON)\(self.pokedexId)"
+        self._pokemonURL = "\(PokeApiService.URL_BASE)\(PokeApiService.PATH_POKEMON)\(self.pokedexId)"
     }
     
     func getPokemonDetails() -> Observable<Any> {
