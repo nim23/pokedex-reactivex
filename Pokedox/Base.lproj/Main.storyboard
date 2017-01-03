@@ -15,10 +15,10 @@
         </array>
     </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Main View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Pokedox" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="MainViewController" customModule="Pokedox" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -411,14 +411,14 @@
                                 <rect key="frame" x="20" y="628" width="984" height="120"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="m15-hf-jVe">
-                                        <rect key="frame" x="0.0" y="0.0" width="120" height="120"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="984" height="120"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="120" id="6rx-V3-9Kk"/>
                                             <constraint firstAttribute="width" constant="120" id="JK7-ad-hKG"/>
                                         </constraints>
                                     </imageView>
-                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="f15-zf-xks">
-                                        <rect key="frame" x="864" y="0.0" width="120" height="120"/>
+                                    <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="f15-zf-xks">
+                                        <rect key="frame" x="984" y="0.0" width="0.0" height="120"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="120" id="kUL-da-5py"/>
                                             <constraint firstAttribute="width" constant="120" id="xYR-ZO-6yG"/>

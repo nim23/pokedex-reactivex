@@ -29,4 +29,23 @@ class PokeApiService {
                 return description
             }
     }
+    
+    func getPokemons() -> Observable<[Pokemon]> {
+        return Observable.create { observer in
+            let path = Bundle.main.path(forResource: "pokemon", ofType: "csv")
+            do {
+                let csv = try CSV(contentsOfURL: path!)
+                let rows = csv.rows
+                observer.on(.next(rows.map {
+                    let pokeId = Int($0["id"]!)!
+                    let name = $0["identifier"]!
+                    return Pokemon(name: name, pokedexId: pokeId)
+                }))
+                observer.on(.completed)
+            } catch let err as NSError {
+                observer.on(.error(err))
+            }
+            return Disposables.create()
+        }
+    }
 }
