@@ -13,7 +13,7 @@ import SwiftyJSON
 class PokeDetailViewModel {
     var pokedexId: Observable<Int>
     var pokemonName: Observable<String>
-    var pokemonImage: Observable<UIImage>
+    var pokemonImage: Observable<UIImage?>
 
     var attack: Observable<String>
     var height: Observable<String>
@@ -31,7 +31,7 @@ class PokeDetailViewModel {
         pokemonName = .just(pokemon.name.capitalized)
         pokemonImage = {
             guard let image = UIImage(named: "\(pokemon.pokedexId)") else {
-                return .just(UIImage(named: "1")!)
+                return .just(nil)
             }
             return .just(image)
         }()

@@ -50,12 +50,12 @@ class PokemonDetailVC: UIViewController {
             .addDisposableTo(disposeBag)
         
         viewModel.pokemonImage
-            .asDriver(onErrorJustReturn: UIImage(named: "1")!)
+            .asDriver(onErrorJustReturn: nil)
             .drive(mainImg.rx.image)
             .addDisposableTo(disposeBag)
         
         viewModel.pokemonImage
-            .asDriver(onErrorJustReturn: UIImage(named: "1")!)
+            .asDriver(onErrorJustReturn: nil)
             .drive(currentEvoImg.rx.image)
             .addDisposableTo(disposeBag)
         
